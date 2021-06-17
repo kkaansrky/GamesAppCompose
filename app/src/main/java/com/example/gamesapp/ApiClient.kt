@@ -4,8 +4,10 @@ import retrofit2.Response
 import java.lang.Exception
 
 class ApiClient(private val gamesService: GamesService) {
-    suspend fun getGameById(gameId: Int): SimpleResponse<GamesResponse> {
-        return safeApiCall { gamesService.getGameById(gameId) }
+
+
+    suspend fun getGameById(gameId: Int, apiKey: String): SimpleResponse<GamesResponse> {
+        return safeApiCall { gamesService.getGameById(gameId,apiKey) }
     }
 
     private inline fun <T> safeApiCall(apiCall: () -> Response<T>): SimpleResponse<T> {

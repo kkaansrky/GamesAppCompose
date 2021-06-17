@@ -1,5 +1,7 @@
 package com.example.gamesapp
 
+import android.content.pm.ApplicationInfo
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -26,6 +28,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val ai: ApplicationInfo = applicationContext.packageManager
+            .getApplicationInfo(applicationContext.packageName, PackageManager.GET_META_DATA)
+        val apiKey = ai.metaData["API_KEY"].toString()
+
         val nameTextView = findViewById<AppCompatTextView>(R.id.nameTextView)
         val headerImageView = findViewById<AppCompatImageView>(R.id.headerImageView)
         val aliveTextView = findViewById<AppCompatTextView>(R.id.aliveTextView)
@@ -33,9 +39,8 @@ class MainActivity : AppCompatActivity() {
         val speciesTextView = findViewById<AppCompatTextView>(R.id.speciesTextView)
 
 
-        viewModel.refreshGame(5)
+        viewModel.refreshGame(5,apiKey)
         viewModel.gameByIdLiveData.observe(this) { response ->
-
             if (response == null) {
                 Toast.makeText(
                     this@MainActivity,
