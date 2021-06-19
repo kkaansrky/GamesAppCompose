@@ -14,3 +14,4 @@ interface GamesService {
         @Query("key") apiKey: String
     ): Response<GamesResponse>
 }
+

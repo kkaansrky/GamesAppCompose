@@ -5,7 +5,12 @@ import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.widget.AppCompatButton
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.lifecycle.ViewModelProvider
@@ -37,26 +42,33 @@ class MainActivity : AppCompatActivity() {
         val aliveTextView = findViewById<AppCompatTextView>(R.id.aliveTextView)
         val originTextView = findViewById<AppCompatTextView>(R.id.originTextView)
         val speciesTextView = findViewById<AppCompatTextView>(R.id.speciesTextView)
+        val button:Button = findViewById(R.id.button)
+        val editText:EditText = findViewById(R.id.edittext)
+
+        button.setOnClickListener {
+
+            viewModel.refreshGame(editText.text.toString().toInt(),apiKey)
+            viewModel.gameByIdLiveData.observe(this) { response ->
+                if (response == null) {
+                    Toast.makeText(
+                        this@MainActivity,
+                        "Unsuccessful network call!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    return@observe
+                }
+                nameTextView.text = response.name
+                aliveTextView.text = response.metacritic.toString()
+                speciesTextView.text = response.released
+                originTextView.text = response.updated
+
+                Picasso.get().load(response.backgroundImage).into(headerImageView)
+
+                Log.i("TAG", "onCreate: "+response.suggestionsCount)
 
 
-        viewModel.refreshGame(5,apiKey)
-        viewModel.gameByIdLiveData.observe(this) { response ->
-            if (response == null) {
-                Toast.makeText(
-                    this@MainActivity,
-                    "Unsuccessful network call!",
-                    Toast.LENGTH_SHORT
-                ).show()
-                return@observe
             }
-
-            nameTextView.text = response.name
-            aliveTextView.text = response.website
-            speciesTextView.text = response.released
-            originTextView.text = response.community_rating.toString()
-
-            Picasso.get().load(response.background_image).into(headerImageView)
         }
-
     }
+
 }

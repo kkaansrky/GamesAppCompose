@@ -1,61 +1,79 @@
 package com.example.gamesapp
 
-import com.example.gamesapp.`object`.*
+import androidx.annotation.Nullable
+import com.google.gson.annotations.SerializedName
 
-data class GamesResponse(
-    val achievements_count: Int,
-    val added: Int,
-    val added_by_status: AddedByStatus,
-    val additions_count: Int,
-    val alternative_names: List<Any>?,
-    val background_image: String,
-    val background_image_additional: String,
-    val clip: Any?,
-    val community_rating: Int?,
-    val creators_count: Int,
-    val description: String,
-    val description_raw: String,
-    val developers: List<Developer>,
-    val dominant_color: String,
-    val esrb_rating: EsrbRating?,
-    val game_series_count: Int,
-    val genres: List<Genre>,
-    val id: Int,
-    val metacritic: Any?,
-    val metacritic_platforms: List<Any>?,
-    val metacritic_url: String,
-    val movies_count: Int,
-    val name: String,
-    val name_original: String,
-    val parent_achievements_count: Int,
-    val parent_platforms: List<ParentPlatform>,
-    val parents_count: Int,
-    val platforms: List<PlatformX>,
-    val playtime: Int,
-    val publishers: List<Publisher>,
-    val rating: Double,
-    val rating_top: Int,
-    val ratings: List<Rating>,
-    val ratings_count: Int,
-    val reactions: Any?,
-    val reddit_count: Int,
-    val reddit_description: String,
-    val reddit_logo: String,
-    val reddit_name: String,
-    val reddit_url: String,
-    val released: String,
-    val reviews_count: Int,
-    val reviews_text_count: Int,
-    val saturated_color: String,
-    val screenshots_count: Int,
-    val slug: String,
-    val stores: List<Store>,
-    val suggestions_count: Int,
-    val tags: List<Tag>,
-    val tba: Boolean,
-    val twitch_count: Int,
-    val updated: String,
-    val user_game: Any?,
-    val website: String,
-    val youtube_count: Int
+
+
+data class GamesResponse (
+    @SerializedName("id") var id : Int,
+    @SerializedName("slug") var slug : String,
+    @SerializedName("name") var name : String,
+    @SerializedName("released") var released : String,
+    @SerializedName("tba") var tba : Boolean,
+    @SerializedName("background_image") var backgroundImage : String?,
+    @SerializedName("rating") var rating : Double,
+    @SerializedName("rating_top") var ratingTop : Int?,
+    @SerializedName("ratings") var ratings : List<Ratings>,
+    @SerializedName("ratings_count") var ratingsCount : Int?,
+    @SerializedName("reviews_text_count") var reviewsTextCount : String?,
+    @SerializedName("added") var added : Int,
+    @SerializedName("added_by_status") var addedByStatus : AddedByStatus =AddedByStatus(0,0,0),
+    @SerializedName("metacritic") var metacritic : Int?,
+    @SerializedName("playtime") var playtime : Int,
+    @SerializedName("suggestions_count") var suggestionsCount : Int?,
+    @SerializedName("updated") var updated : String,
+    @SerializedName("esrb_rating") var esrbRating : EsrbRating?,
+    @SerializedName("platforms") var platforms : List<Platforms>
+
 )
+
+data class Ratings (
+
+    @SerializedName("id") var id : Int,
+    @SerializedName("title") var title : String,
+    @SerializedName("count") var count : Int,
+    @SerializedName("percent") var percent : Double
+
+)
+
+data class AddedByStatus (
+
+    @SerializedName("owned") var owned : Int,
+    @SerializedName("beaten") var beaten : Int,
+    @SerializedName("dropped") var dropped : Int
+
+)
+
+
+data class Platform (
+
+    @SerializedName("id") var id : Int,
+    @SerializedName("slug") var slug : String,
+    @SerializedName("name") var name : String
+
+)
+
+data class Requirements (
+
+    @SerializedName("minimum") var minimum : String?,
+    @SerializedName("recommended") var recommended : String?
+
+)
+
+data class Platforms (
+
+    @SerializedName("platform") var platform : Platform,
+    @SerializedName("released_at") var releasedAt : String?,
+    @SerializedName("requirements") var requirements : Requirements
+
+)
+
+data class EsrbRating (
+
+    @SerializedName("id") var id : Int,
+    @SerializedName("name") var name : String,
+    @SerializedName("slug") var slug : String
+
+)
+
