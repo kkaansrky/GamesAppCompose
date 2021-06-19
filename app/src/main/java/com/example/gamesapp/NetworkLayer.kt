@@ -31,7 +31,7 @@ object NetworkLayer {
     val apiClient = ApiClient(gamesService)
 }
 
-@Retention(AnnotationRetention.RUNTIME)
+/*@Retention(AnnotationRetention.RUNTIME)
 @JsonQualifier
 annotation class NullToEmptyString
 
@@ -46,4 +46,4 @@ class NullToEmptyStringAdapter {
     fun fromJson(@Nullable data: String?): String? {
         return data ?: ""
     }
-}
+}*/
