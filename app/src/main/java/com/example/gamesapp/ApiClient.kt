@@ -6,8 +6,12 @@ import java.lang.Exception
 class ApiClient(private val gamesService: GamesService) {
 
 
-    suspend fun getGameById(gameId: Int, apiKey: String): SimpleResponse<GamesResponse> {
+    suspend fun getGameById(gameId: Int, apiKey: String): SimpleResponse<GameResponse> {
         return safeApiCall { gamesService.getGameById(gameId,apiKey) }
+    }
+
+    suspend fun getGames(apiKey: String): SimpleResponse<GamesResponse> {
+        return safeApiCall { gamesService.getGames(apiKey) }
     }
 
     private inline fun <T> safeApiCall(apiCall: () -> Response<T>): SimpleResponse<T> {

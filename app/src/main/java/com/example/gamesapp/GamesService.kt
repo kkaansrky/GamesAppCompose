@@ -12,6 +12,11 @@ interface GamesService {
     suspend fun getGameById(
         @Path("game-id") gameId: Int,
         @Query("key") apiKey: String
+    ): Response<GameResponse>
+
+    @GET("games" )
+    suspend fun getGames(
+        @Query("key") apiKey: String
     ): Response<GamesResponse>
 }
 

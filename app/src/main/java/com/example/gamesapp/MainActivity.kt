@@ -45,26 +45,34 @@ class MainActivity : AppCompatActivity() {
         val button:Button = findViewById(R.id.button)
         val editText:EditText = findViewById(R.id.edittext)
 
+        viewModel.getGames(apiKey)
+        viewModel.gamesLiveData.observe(this) { response ->
+            if (response == null) {
+                Toast.makeText(
+                    this@MainActivity,
+                    "Unsuccessful network call!",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@observe
+            }
+            val list :List<GameResponse> = response.results
+            val game : GameResponse = list[1]
+            nameTextView.text = game.name
+            aliveTextView.text = game.metacritic.toString()
+            speciesTextView.text = game.released
+            originTextView.text = game.updated
+
+            Picasso.get().load(game.backgroundImage).into(headerImageView)
+
+            Log.i("TAG", "onCreate: "+game.suggestionsCount)
+
+            for (x in list){
+                Log.i("TAG", "onCreate: "+x.name)
+            }
+
         button.setOnClickListener {
 
-            viewModel.refreshGame(editText.text.toString().toInt(),apiKey)
-            viewModel.gameByIdLiveData.observe(this) { response ->
-                if (response == null) {
-                    Toast.makeText(
-                        this@MainActivity,
-                        "Unsuccessful network call!",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    return@observe
-                }
-                nameTextView.text = response.name
-                aliveTextView.text = response.metacritic.toString()
-                speciesTextView.text = response.released
-                originTextView.text = response.updated
 
-                Picasso.get().load(response.backgroundImage).into(headerImageView)
-
-                Log.i("TAG", "onCreate: "+response.suggestionsCount)
 
 
             }

@@ -4,8 +4,17 @@ import androidx.annotation.Nullable
 import com.google.gson.annotations.SerializedName
 
 
-
 data class GamesResponse (
+
+    @SerializedName("count") var count : Int,
+    @SerializedName("next") var next : String,
+    @SerializedName("previous") var previous : String,
+    @SerializedName("results") var results : List<GameResponse>
+
+)
+
+
+data class GameResponse (
     @SerializedName("id") var id : Int,
     @SerializedName("slug") var slug : String,
     @SerializedName("name") var name : String,

@@ -9,8 +9,11 @@ import kotlinx.coroutines.launch
 class SharedViewModel : ViewModel() {
     private val repository = SharedRepository()
 
-    private val _gameByIdLiveData = MutableLiveData<GamesResponse>()
-    val gameByIdLiveData: LiveData<GamesResponse> = _gameByIdLiveData
+    private val _gameByIdLiveData = MutableLiveData<GameResponse>()
+    val gameByIdLiveData: LiveData<GameResponse> = _gameByIdLiveData
+
+    private val _gamesLiveData = MutableLiveData<GamesResponse>()
+    val gamesLiveData: LiveData<GamesResponse> = _gamesLiveData
 
     fun refreshGame(gameId: Int,apiKey: String) {
         viewModelScope.launch{
@@ -19,4 +22,13 @@ class SharedViewModel : ViewModel() {
             _gameByIdLiveData.postValue(response)
         }
     }
+
+    fun getGames(apiKey: String) {
+        viewModelScope.launch{
+            val response = repository.getGames(apiKey)
+
+            _gamesLiveData.postValue(response)
+        }
+    }
 }
+
