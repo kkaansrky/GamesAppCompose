@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         val button:Button = findViewById(R.id.button)
         val editText:EditText = findViewById(R.id.edittext)
 
-        viewModel.getGames(apiKey)
+        viewModel.getGames("csgo",1,10,apiKey)
         viewModel.gamesLiveData.observe(this) { response ->
             if (response == null) {
                 Toast.makeText(
@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
                 return@observe
             }
             val list :List<GameResponse> = response.results
-            val game : GameResponse = list[1]
+            val game : GameResponse = list[0]
             nameTextView.text = game.name
             aliveTextView.text = game.metacritic.toString()
             speciesTextView.text = game.released

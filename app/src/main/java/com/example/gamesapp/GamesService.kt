@@ -16,6 +16,9 @@ interface GamesService {
 
     @GET("games" )
     suspend fun getGames(
+        @Query("search") name: String,
+        @Query("page") page: Int,
+        @Query("page_size") page_size: Int,
         @Query("key") apiKey: String
     ): Response<GamesResponse>
 }

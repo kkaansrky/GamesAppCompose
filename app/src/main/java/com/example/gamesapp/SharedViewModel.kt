@@ -15,17 +15,22 @@ class SharedViewModel : ViewModel() {
     private val _gamesLiveData = MutableLiveData<GamesResponse>()
     val gamesLiveData: LiveData<GamesResponse> = _gamesLiveData
 
-    fun refreshGame(gameId: Int,apiKey: String) {
-        viewModelScope.launch{
-            val response = repository.getGameById(gameId,apiKey)
+    fun refreshGame(gameId: Int, apiKey: String) {
+        viewModelScope.launch {
+            val response = repository.getGameById(gameId, apiKey)
 
             _gameByIdLiveData.postValue(response)
         }
     }
 
-    fun getGames(apiKey: String) {
-        viewModelScope.launch{
-            val response = repository.getGames(apiKey)
+    fun getGames(
+        search: String,
+        page: Int,
+        pageSize: Int,
+        apiKey: String
+    ) {
+        viewModelScope.launch {
+            val response = repository.getGames(search,page,pageSize,apiKey)
 
             _gamesLiveData.postValue(response)
         }
