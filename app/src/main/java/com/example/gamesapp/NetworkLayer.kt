@@ -10,6 +10,8 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 object NetworkLayer {
     //Kendisi çalışmadı null olmayan json objelerini null
     //olarak gösterdiği için onun yerine retrofit gson converter kullandım.
+
+
     /*val moshi = Moshi.Builder()
         .add(NullToEmptyStringAdapter())
         .addLast(KotlinJsonAdapterFactory()).build()*/

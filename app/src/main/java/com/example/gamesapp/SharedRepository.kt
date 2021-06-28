@@ -20,18 +20,11 @@ class SharedRepository {
         page: Int,
         pageSize: Int,
         apiKey: String
-    ): GamesResponse? {
+    ): SimpleResponse<GamesResponse> {
         val request = NetworkLayer.apiClient.getGames(search,page,pageSize,apiKey)
 
-        if (request.failed) {
-            return null
-        }
 
-        if (!request.isSuccesful) {
-            return null
-        }
-
-        return request.body
+        return request
     }
 
 }

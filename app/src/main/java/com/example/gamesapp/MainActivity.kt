@@ -1,5 +1,6 @@
 package com.example.gamesapp
 
+import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
@@ -13,10 +14,15 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.flow.collectLatest
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,55 +34,50 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: SharedViewModel by lazy {
         ViewModelProvider(this).get(SharedViewModel::class.java)
     }
+    lateinit var recyclerViewAdapter: RecyclerViewAdapter
+
+
+    private lateinit var gameList : List<GameResponse>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
+        initRecyclerView()
+        getGamesList("")
+
+    }
+
+    private fun initRecyclerView(){
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(this@MainActivity)
+            val decoration = DividerItemDecoration(applicationContext,DividerItemDecoration.VERTICAL)
+            addItemDecoration(decoration)
+
+            recyclerViewAdapter = RecyclerViewAdapter()
+            adapter = recyclerViewAdapter
+
+        }
+    }
+
+    fun getGamesList(search:String){
+        lifecycleScope.launchWhenCreated {
+            viewModel.getListData(search,getApiKey()).collectLatest {
+                recyclerViewAdapter.submitData(it)
+                Log.i("TAG", "getGamesList: "+it.toString())
+            }
+        }
+
+    }
+
+    private fun getApiKey(): String {
         val ai: ApplicationInfo = applicationContext.packageManager
             .getApplicationInfo(applicationContext.packageName, PackageManager.GET_META_DATA)
         val apiKey = ai.metaData["API_KEY"].toString()
 
-        val nameTextView = findViewById<AppCompatTextView>(R.id.nameTextView)
-        val headerImageView = findViewById<AppCompatImageView>(R.id.headerImageView)
-        val aliveTextView = findViewById<AppCompatTextView>(R.id.aliveTextView)
-        val originTextView = findViewById<AppCompatTextView>(R.id.originTextView)
-        val speciesTextView = findViewById<AppCompatTextView>(R.id.speciesTextView)
-        val button:Button = findViewById(R.id.button)
-        val editText:EditText = findViewById(R.id.edittext)
+        return apiKey
 
-        viewModel.getGames("csgo",1,10,apiKey)
-        viewModel.gamesLiveData.observe(this) { response ->
-            if (response == null) {
-                Toast.makeText(
-                    this@MainActivity,
-                    "Unsuccessful network call!",
-                    Toast.LENGTH_SHORT
-                ).show()
-                return@observe
-            }
-            val list :List<GameResponse> = response.results
-            val game : GameResponse = list[0]
-            nameTextView.text = game.name
-            aliveTextView.text = game.metacritic.toString()
-            speciesTextView.text = game.released
-            originTextView.text = game.updated
-
-            Picasso.get().load(game.backgroundImage).into(headerImageView)
-
-            Log.i("TAG", "onCreate: "+game.suggestionsCount)
-
-            for (x in list){
-                Log.i("TAG", "onCreate: "+x.name)
-            }
-
-        button.setOnClickListener {
-
-
-
-
-            }
-        }
     }
 
 }
