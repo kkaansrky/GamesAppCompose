@@ -16,7 +16,7 @@ class ApiClient(private val gamesService: GamesService) {
         pageSize: Int,
         apiKey: String
     ): SimpleResponse<GamesResponse> {
-        return safeApiCall { gamesService.getGames(search,page,pageSize,apiKey) }
+        return safeApiCall { gamesService.getGames(search, page, pageSize, apiKey) }
     }
 
     private inline fun <T> safeApiCall(apiCall: () -> Response<T>): SimpleResponse<T> {

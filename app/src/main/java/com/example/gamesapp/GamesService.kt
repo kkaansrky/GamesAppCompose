@@ -8,13 +8,13 @@ import retrofit2.http.Query
 
 interface GamesService {
 
-    @GET("games/{game-id}" )
+    @GET("games/{game-id}")
     suspend fun getGameById(
         @Path("game-id") gameId: Int,
         @Query("key") apiKey: String
     ): Response<GameResponse>
 
-    @GET("games" )
+    @GET("games")
     suspend fun getGames(
         @Query("search") name: String,
         @Query("page") page: Int,

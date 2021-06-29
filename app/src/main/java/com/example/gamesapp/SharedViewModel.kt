@@ -35,7 +35,7 @@ class SharedViewModel : ViewModel() {
         apiKey: String
     ) {
         viewModelScope.launch {
-            val response = repository.getGames(search,page,pageSize,apiKey)
+            val response = repository.getGames(search, page, pageSize, apiKey)
 
             _gamesLiveData.postValue(response.body)
         }
@@ -45,8 +45,10 @@ class SharedViewModel : ViewModel() {
         search: String,
         apiKey: String
     ): Flow<PagingData<GameResponse>> {
-        return Pager (config = PagingConfig(pageSize = 20, maxSize = 100),
-            pagingSourceFactory = {GamePagingSource(repository,search,apiKey)}).flow.cachedIn(viewModelScope)
+        return Pager(config = PagingConfig(pageSize = 20, maxSize = 100),
+            pagingSourceFactory = { GamePagingSource(repository, search, apiKey) }).flow.cachedIn(
+            viewModelScope
+        )
     }
 }
 

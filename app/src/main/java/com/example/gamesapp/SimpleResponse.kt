@@ -9,7 +9,7 @@ data class SimpleResponse<T>(
     val exception: Exception?
 ) {
 
-    companion object{
+    companion object {
         fun <T> success(data: Response<T>): SimpleResponse<T> {
             return SimpleResponse(
                 status = Status.Success,
@@ -18,8 +18,8 @@ data class SimpleResponse<T>(
             )
         }
 
-        fun<T> failure(exception: Exception): SimpleResponse<T> {
-            return  SimpleResponse(
+        fun <T> failure(exception: Exception): SimpleResponse<T> {
+            return SimpleResponse(
                 status = Status.Failure,
                 data = null,
                 exception = exception

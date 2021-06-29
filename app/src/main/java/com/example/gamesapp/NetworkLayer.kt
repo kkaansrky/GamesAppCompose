@@ -17,16 +17,13 @@ object NetworkLayer {
         .addLast(KotlinJsonAdapterFactory()).build()*/
 
 
-    val retrofit: Retrofit = Retrofit.Builder()
+    private val retrofit: Retrofit = Retrofit.Builder()
         .baseUrl("https://api.rawg.io/api/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
 
-
-
-
-    val gamesService: GamesService by lazy{
+    private val gamesService: GamesService by lazy {
         retrofit.create(GamesService::class.java)
     }
 

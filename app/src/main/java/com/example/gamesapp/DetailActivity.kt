@@ -1,13 +1,11 @@
 package com.example.gamesapp
 
-import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.lifecycle.ViewModelProvider
@@ -19,23 +17,27 @@ class DetailActivity : AppCompatActivity() {
         ViewModelProvider(this).get(SharedViewModel::class.java)
     }
 
-    lateinit var nameTextView:TextView
-    lateinit var aliveTextView:TextView
-    lateinit var originTextView:TextView
-    lateinit var speciesTextView:TextView
-    lateinit var headerImageView:ImageView
+    private lateinit var nameTextView: TextView
+    private lateinit var aliveTextView: TextView
+    private lateinit var originTextView: TextView
+    private lateinit var speciesTextView: TextView
+    private lateinit var headerImageView: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
 
+        initView()
+        val ss: String = intent.getStringExtra("id").toString()
 
 
+        val id: Int = ss.toInt()
+        setGameView(id)
 
 
     }
 
-    private fun initView(){
+    private fun initView() {
         nameTextView = findViewById<AppCompatTextView>(R.id.nameTextView)
         headerImageView = findViewById<AppCompatImageView>(R.id.headerImageView)
         aliveTextView = findViewById<AppCompatTextView>(R.id.aliveTextView)
@@ -43,41 +45,30 @@ class DetailActivity : AppCompatActivity() {
         speciesTextView = findViewById<AppCompatTextView>(R.id.speciesTextView)
     }
 
-    private fun setGameView(gameId:Int){
+    private fun setGameView(gameId: Int) {
         viewModel.refreshGame(gameId, getApiKey())
-        viewModel.gameByIdLiveData.observe(this) { response ->
-            if (response == null) {
-                Toast.makeText(
-                    this,
-                    "Unsuccessful network call!",
-                    Toast.LENGTH_SHORT
-                ).show()
-                return@observe
-            }
-            val game = response
+        viewModel.gameByIdLiveData.observe(this) { response: GameResponse ->
 
-            nameTextView.text = game.name
-            aliveTextView.text = game.metacritic.toString()
-            speciesTextView.text = game.released
-            originTextView.text = game.updated
+            nameTextView.text = response.name
+            aliveTextView.text = response.metacritic.toString()
+            speciesTextView.text = response.released
+            originTextView.text = response.updated
 
             Glide.with(headerImageView)
-                .load(game.backgroundImage)
+                .load(response.backgroundImage)
                 .circleCrop()
                 .into(headerImageView)
-
 
 
         }
     }
 
 
-    fun getApiKey(): String {
+    private fun getApiKey(): String {
         val ai: ApplicationInfo = applicationContext.packageManager
             .getApplicationInfo(applicationContext.packageName, PackageManager.GET_META_DATA)
-        val apiKey = ai.metaData["API_KEY"].toString()
 
-        return apiKey
+        return ai.metaData["API_KEY"].toString()
 
     }
 }

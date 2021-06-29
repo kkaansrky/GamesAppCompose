@@ -21,7 +21,7 @@ class SharedRepository {
         pageSize: Int,
         apiKey: String
     ): SimpleResponse<GamesResponse> {
-        val request = NetworkLayer.apiClient.getGames(search,page,pageSize,apiKey)
+        val request = NetworkLayer.apiClient.getGames(search, page, pageSize, apiKey)
 
 
         return request
