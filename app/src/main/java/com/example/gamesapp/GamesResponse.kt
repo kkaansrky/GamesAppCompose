@@ -19,6 +19,7 @@ data class GameResponse(
     @SerializedName("name") var name: String,
     @SerializedName("released") var released: String,
     @SerializedName("tba") var tba: Boolean,
+    @SerializedName("description") var description: String,
     @SerializedName("background_image") var backgroundImage: String?,
     @SerializedName("rating") var rating: Double,
     @SerializedName("rating_top") var ratingTop: Int?,
@@ -32,7 +33,29 @@ data class GameResponse(
     @SerializedName("suggestions_count") var suggestionsCount: Int?,
     @SerializedName("updated") var updated: String,
     @SerializedName("esrb_rating") var esrbRating: EsrbRating?,
-    @SerializedName("platforms") var platforms: List<Platforms>
+    @SerializedName("platforms") var platforms: List<Platforms>,
+    @SerializedName("publishers") var publishers: List<Publishers>,
+    @SerializedName("genres") var genres: List<Genres>
+
+)
+
+data class Publishers(
+
+    @SerializedName("id") var id: Int,
+    @SerializedName("name") var name: String,
+    @SerializedName("slug") var slug: String,
+    @SerializedName("games_count") var gamesCount: Int,
+    @SerializedName("image_background") var imageBackground: String
+
+)
+
+data class Genres(
+
+    @SerializedName("id") var id: Int,
+    @SerializedName("name") var name: String,
+    @SerializedName("slug") var slug: String,
+    @SerializedName("games_count") var gamesCount: Int,
+    @SerializedName("image_background") var imageBackground: String
 
 )
 

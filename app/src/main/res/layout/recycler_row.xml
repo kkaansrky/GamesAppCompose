@@ -19,6 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
+            app:cardBackgroundColor="@color/card_back"
             card_view:cardCornerRadius="12dp"
             card_view:cardElevation="6dp"
             card_view:layout_columnWeight="1"
@@ -31,6 +32,7 @@
 
                 <TextView
                     android:id="@+id/gameID"
+                    android:textColor="@color/white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:visibility="gone" />
@@ -49,10 +51,9 @@
                     android:id="@+id/gameName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
                     android:layout_margin="10dp"
                     android:maxLines="1"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="18sp"
                     app:autoSizeMaxTextSize="22sp"
                     app:autoSizeMinTextSize="14sp"
@@ -64,7 +65,8 @@
                 <androidx.gridlayout.widget.GridLayout
                     android:layout_width="fill_parent"
                     android:layout_height="30dp"
-                    android:scaleType="fitXY">
+                    android:scaleType="fitXY"
+                    android:layout_margin="10dp">
 
                     <ImageView
                         android:id="@+id/platformXbox"

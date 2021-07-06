@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">GamesApp</string>
+    <string name="search_games">Search Games</string>
+    <string name="information">Information</string>
+    <string name="relaese_date">Relaese Date :</string>
+    <string name="play_time">Play Time :</string>
+    <string name="publishers">Publishers :</string>
+    <string name="descriptions">Descriptions</string>
+    <string name="genres">Genres :</string>
 </resources>
