@@ -13,7 +13,7 @@
         android:background="@color/background"
         android:orientation="vertical"
         android:paddingBottom="20dp"
-        tools:context=".DetailActivity">
+        tools:context=".ui.DetailActivity">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/headerImageView"

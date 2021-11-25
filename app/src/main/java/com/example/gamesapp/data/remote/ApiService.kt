@@ -1,13 +1,13 @@
-package com.example.gamesapp
+package com.example.gamesapp.data.remote
 
-
+import com.example.gamesapp.data.entity.GameResponse
+import com.example.gamesapp.data.entity.games.GamesResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface GamesService {
-
+interface ApiService {
     @GET("games/{game-id}")
     suspend fun getGameById(
         @Path("game-id") gameId: Int,
@@ -22,4 +22,3 @@ interface GamesService {
         @Query("key") apiKey: String
     ): Response<GamesResponse>
 }
-
