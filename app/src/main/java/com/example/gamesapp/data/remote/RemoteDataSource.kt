@@ -12,7 +12,7 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService): 
     }
 
     suspend fun getGames(
-        search: String,
+        search: String?,
         page: Int,
         pageSize: Int
     ) = apiService.getGames(search,page,pageSize,apiKey)

@@ -12,7 +12,7 @@ class ApiRepository @Inject constructor(
     }
 
     suspend fun getGames(
-        search: String,
+        search: String?,
         page: Int,
         pageSize: Int
     ) = remoteDataSource.getGames(search, page, pageSize)

@@ -8,7 +8,7 @@ import com.example.gamesapp.data.entity.GameResponse
 
 class ListGamesPagingSource(
     private val apiRepository: ApiRepository,
-    var search: String,
+    var search: String?,
 ) : PagingSource<Int, GameResponse>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, GameResponse> {
