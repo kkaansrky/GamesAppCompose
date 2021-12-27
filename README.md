@@ -1,15 +1,17 @@
 # GamesApp
 
-## Staj Ödevi
+## Used Technologies
 
+* MVVM Architecture
+* Dagger Hilt
+* Kotlin Coroutine
+* ViewModel - Flow
+* Jetpack Compose
 
 ----
 
   
 <div>
-<img src=https://github.com/kkaansrky/GamesApp/blob/main/SS/1.jpg  width="383" height="800"/>                                                                                                           
-<img src=https://github.com/kkaansrky/GamesApp/blob/main/SS/2.jpg  width="383" height="800"/>
-<img src=https://github.com/kkaansrky/GamesApp/blob/main/SS/3.jpg  width="383" height="800"/>                                                                                                           
-<img src=https://github.com/kkaansrky/GamesApp/blob/main/SS/4.jpg  width="383" height="800"/> 
+<img src=https://github.com/kkaansrky/GamesApp/blob/main/SS/screenGif.gif  width="383" height="800"/>                                                                                                           
 </div>
 
