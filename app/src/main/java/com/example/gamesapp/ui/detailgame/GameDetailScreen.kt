@@ -12,14 +12,19 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberImagePainter
+import com.example.gamesapp.R
 import com.example.gamesapp.data.entity.GameResponse
+import com.example.gamesapp.data.entity.game.Genres
+import com.example.gamesapp.data.entity.game.Publishers
+import com.example.gamesapp.ui.listgames.SetPlatformImages
 import com.example.gamesapp.ui.theme.CardBack
 import com.example.gamesapp.utils.convertFromHtml
 
@@ -48,8 +53,7 @@ fun GameInit(game: GameResponse) {
         contentDescription = null,
         modifier = Modifier
             .fillMaxWidth()
-            .height(250.dp)
-            .clip(RoundedCornerShape(0.dp)),
+            .height(250.dp),
         contentScale = ContentScale.Crop
     )
     Column(
@@ -64,8 +68,14 @@ fun GameInit(game: GameResponse) {
         )
         Spacer(modifier = Modifier.height(20.dp))
 
+        SetPlatformImages(game.platforms)
+
+        Spacer(modifier = Modifier.height(8.dp))
+
         GameSpecifications(game)
+        //VisitWebSites()
         GameDescription(description = game.description)
+
     }
 }
 
@@ -86,6 +96,7 @@ fun GameSpecifications(
         ) {
             Text(
                 text = "Information",
+                fontStyle = FontStyle.Italic,
                 style = MaterialTheme.typography.h5
             )
             Row(
@@ -95,6 +106,7 @@ fun GameSpecifications(
             ) {
                 Text(
                     text = "Release Date :",
+                    fontStyle = FontStyle.Italic
                 )
                 Text(
                     text = game.released,
@@ -110,9 +122,10 @@ fun GameSpecifications(
             ) {
                 Text(
                     text = "Genres :",
+                    fontStyle = FontStyle.Italic
                 )
                 Text(
-                    text = game.name,
+                    text = mapAndSetGenres(game.genres),
                 )
             }
 
@@ -125,6 +138,7 @@ fun GameSpecifications(
             ) {
                 Text(
                     text = "Play Time :",
+                    fontStyle = FontStyle.Italic
                 )
                 Text(
                     text = game.playtime.toString(),
@@ -141,9 +155,10 @@ fun GameSpecifications(
             ) {
                 Text(
                     text = "Publishers :",
+                    fontStyle = FontStyle.Italic
                 )
                 Text(
-                    text = game.reviewsTextCount.toString(),
+                    text = mapAndSetPublishers(game.publishers),
                 )
             }
         }
@@ -169,6 +184,7 @@ fun GameDescription(
         ) {
             Text(
                 text = "Description",
+                fontStyle = FontStyle.Italic,
                 style = MaterialTheme.typography.h5
             )
             Text(
@@ -176,5 +192,101 @@ fun GameDescription(
                 style = MaterialTheme.typography.body1
             )
         }
+    }
+}
+
+@Composable
+fun VisitWebSites() {
+    Card(
+        modifier = Modifier
+            .padding(0.dp, 16.dp)
+            .fillMaxWidth(),
+        shape = RoundedCornerShape(12.dp),
+        backgroundColor = CardBack,
+    ) {
+
+        Column(
+            modifier = Modifier
+                .padding(10.dp)
+                .fillMaxWidth()
+        ) {
+
+            Text(
+                text = "Web Connections",
+                fontStyle = FontStyle.Italic,
+                style = MaterialTheme.typography.h5
+            )
+
+            Row(
+                modifier = Modifier
+                    .padding(0.dp, 8.dp)
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(text = "Visit Reddit")
+
+                Image(
+                    painter = painterResource(R.drawable.ic_arrow),
+                    modifier = Modifier
+                        .padding(2.dp)
+                        .height(15.dp),
+                    contentDescription = "item"
+                )
+            }
+
+            Divider()
+
+            Row(
+                modifier = Modifier
+                    .padding(0.dp, 8.dp)
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(text = "Visit Website")
+
+                Image(
+                    painter = painterResource(R.drawable.ic_arrow),
+                    modifier = Modifier
+                        .padding(2.dp)
+                        .height(15.dp)
+                    ,
+                    contentDescription = "item")
+            }
+        }
+    }
+}
+
+private fun mapAndSetGenres(genres: List<Genres>): String {
+    val genresNameMapped = genres.map { it.name }
+
+    return if (genresNameMapped.isEmpty()) {
+        "Unknown"
+    } else {
+        genresNameMapped.joinToString(
+            ", ",
+            "",
+            "",
+            -1,
+            "...",
+            null
+        )
+    }
+}
+
+private fun mapAndSetPublishers(publishers: List<Publishers>): String {
+    val publishersNameMapped = publishers.map { it.name }
+
+    return if (publishersNameMapped.isEmpty()) {
+        "Unknown"
+    } else {
+        publishersNameMapped.joinToString(
+            ", ",
+            "",
+            "",
+            -1,
+            "...",
+            null
+        )
+
     }
 }

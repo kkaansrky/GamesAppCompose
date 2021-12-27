@@ -14,7 +14,7 @@ class ListGamesViewModel @Inject constructor(
     private var apiRepository: ApiRepository
 ) : ViewModel() {
 
-    val games = Pager(PagingConfig(pageSize = 20)) {
-        ListGamesPagingSource(apiRepository,null)
+    fun games(search:String?) = Pager(PagingConfig(pageSize = 20)) {
+        ListGamesPagingSource(apiRepository,search)
     }.flow
 }
