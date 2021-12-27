@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.Surface
+import androidx.compose.material.TopAppBar
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -13,6 +14,7 @@ import com.example.gamesapp.ui.detailgame.GameDetailScreen
 import com.example.gamesapp.ui.listgames.GamesListScreen
 import com.example.gamesapp.ui.theme.Background
 import com.example.gamesapp.ui.theme.GamesAppTheme
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,8 +24,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             GamesAppTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(color = Background) {
+                Surface() {
                     val navController = rememberNavController()
                     NavHost(
                         navController = navController,
