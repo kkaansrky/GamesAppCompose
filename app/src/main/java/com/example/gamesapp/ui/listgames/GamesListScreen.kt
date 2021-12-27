@@ -2,11 +2,10 @@ package com.example.gamesapp.ui.listgames
 
 import android.content.ContentValues.TAG
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.*
+import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -20,12 +19,10 @@ import androidx.lifecycle.liveData
 import androidx.navigation.NavController
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.example.gamesapp.data.entity.GameResponse
-import androidx.paging.compose.items
 import com.example.gamesapp.R
+import com.example.gamesapp.data.entity.GameResponse
 import com.example.gamesapp.ui.Screen
 import com.example.gamesapp.ui.listgames.components.GamesListItem
-import kotlin.coroutines.coroutineContext
 
 var gridCellValue = liveData<Int> { emit(2) }
 
@@ -45,9 +42,11 @@ fun GamesListScreen(
         Column {
 
             Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
+                horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(4.dp)
+                modifier = Modifier
+                    .padding(4.dp)
+                    .fillMaxWidth()
             ) {
                 OutlinedTextField(
                     value = searchText,
@@ -59,7 +58,9 @@ fun GamesListScreen(
                         unfocusedBorderColor = Color.Gray
                     ),
                     label = { Text(text = "Search", color = Color.White) },
-                    modifier = Modifier.width(315.dp)
+                    modifier = Modifier
+                        .width(315.dp)
+                        .align(Alignment.CenterVertically)
 
                 )
 
@@ -72,6 +73,8 @@ fun GamesListScreen(
                             cellValue.value = 2
                         }
                     },
+                    modifier = Modifier
+                        .padding(4.dp, 11.dp, 4.dp, 4.dp)
                 ) {
 
 
